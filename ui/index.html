@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="grsApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>GRS Dashboard</title>
+
+    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <!-- Custom Fonts -->
+    <link href="components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Angular -->
+    <script src="components/angular/angular.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/app.js"></script>
+    <script src="js/controller.js"></script>
+
+</head>
+<body>
+
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">GRS FFO Dashboard</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search..."  ng-model="query">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> TestR Status</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper" ng-controller="ReconStatusCtrl">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="page-header">TestR Status</h1>
+                </div>
+                <div class="col-lg-6">
+                    <form role="form">
+                        <div class="form-group col-lg-6">
+                            <select class="form-control">
+                                <option>DEV</option>
+                                <option>UAT</option>
+                                <option>REG</option>
+                                <option>PROD</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <select class="form-control">
+                                <option>OTC</option>
+                                <option>FFO</option>
+                                <option>Brokerage</option>
+                                <option>Fees</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6" ng-repeat="reconStatus in reconStatusList | filter:{ company: query }">
+                    <div class="panel" ng-class="{'panel-red': reconStatus.status === 'failed', 'panel-green': reconStatus.status === 'complete', 'panel-yellow': reconStatus.status === 'inProgress'}">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i ng-class="{'fa-thumbs-down': reconStatus.status === 'failed', 'fa-thumbs-up': reconStatus.status === 'complete', 'fa-spinner': reconStatus.status === 'inProgress'}" class="fa fa-4x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{reconStatus.company}}</div>
+                                    <div>{{reconStatus.status}}</div>
+                                    <div>{{reconStatus.timeStamp}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="components/raphael/raphael-min.js"></script>
+    <script src="components/morrisjs/morris.min.js"></script>
+
+
+
+</body>
+</html>
